@@ -1,19 +1,27 @@
 use structopt::StructOpt;
+use std::io::{self, Read};
 
 #[derive(Debug, StructOpt)]
 #[structopt(name = "rock", about = "A simple command line standard out parser")]
 struct Opt {
     /// -s, --split,    rock --split ,
-    #[structopt(long = "split", short = "s")]
+    #[structopt(short, long)]
     split: bool,
 
     /// -r, --replace,  rock --replace ~ /home/jake
-    #[structopt(long = "replace", short = "r")]
-    replace: bool
+    #[structopt(short, long)]
+    replace: bool,
 }
 
-fn main() {
+fn main() -> io::Result<()> {
     let args = Opt::from_args();
 
-    println!("{:?}", args);
+    let mut buffer = String::new();
+    let mut stdin = io::stdin();
+    stdin.read_to_string(&mut buffer)?;
+
+    // Remove newline
+    buffer.pop();
+    print!("{}", buffer);
+    Ok(())
 }
