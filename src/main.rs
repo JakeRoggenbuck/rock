@@ -11,6 +11,9 @@ struct Opt {
     /// -r, --replace,  rock --replace ~ /home/jake
     #[structopt(short, long)]
     replace: bool,
+
+    first: Option<String>,
+    second: Option<String>,
 }
 
 fn replace(literal: &str, from: &str, to: &str) -> String {
@@ -37,16 +40,28 @@ fn split(literal: &str, separator: char) -> Vec<String> {
     return parts;
 }
 
+fn read_input() -> Result<String, String> {
+    let mut buffer = String::new();
+    let mut stdin = io::stdin();
+    match stdin.read_to_string(&mut buffer) {
+        Ok(_) => {
+            // Remove newline
+            buffer.pop();
+            return Ok(buffer.to_string());
+        }
+        Err(e) => {
+            eprintln!("{}", e);
+            return Err(e.to_string());
+        }
+    }
+
+}
+
 fn main() -> io::Result<()> {
     let args = Opt::from_args();
 
-    let mut buffer = String::new();
-    let mut stdin = io::stdin();
-    stdin.read_to_string(&mut buffer)?;
+    println!("{:?}", read_input().unwrap());
 
-    // Remove newline
-    buffer.pop();
-    print!("{}", buffer);
     Ok(())
 }
 
@@ -61,10 +76,7 @@ mod tests {
             "this will get replaced"
         );
 
-        assert_eq!(
-            replace("this will not", "/", " "),
-            "this will not"
-        );
+        assert_eq!(replace("this will not", "/", " "), "this will not");
     }
 
     #[test]
