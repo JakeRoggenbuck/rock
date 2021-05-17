@@ -26,14 +26,22 @@ fn split(literal: &str, separator: char) -> Vec<String> {
     let mut parts: Vec<String> = Vec::new();
     let mut index: usize = 0;
 
-    let mut current_part = String::new();
+    let mut current_part: String = String::new();
     while index < chars.len() {
-        let current_char = chars[index];
+        let current_char: char = chars[index];
+        // If it runs into the thing being split by,
+        // push to parts and create a new part
         if current_char == separator {
             parts.push(current_part);
             current_part = String::new();
         } else {
             current_part.push(current_char);
+        }
+        // If it has reached the end of the string,
+        // add the last part to parts because there
+        // are no more separators in the string
+        if index + 1 == chars.len() {
+            parts.push(current_part.clone());
         }
         index += 1;
     }
@@ -41,7 +49,7 @@ fn split(literal: &str, separator: char) -> Vec<String> {
 }
 
 fn read_input() -> Result<String, String> {
-    let mut buffer = String::new();
+    let mut buffer: String = String::new();
     let mut stdin = io::stdin();
     match stdin.read_to_string(&mut buffer) {
         Ok(_) => {
@@ -57,11 +65,10 @@ fn read_input() -> Result<String, String> {
 }
 
 fn main() {
-    let args = Opt::from_args();
+    let args: Opt = Opt::from_args();
 
-    let input = read_input().unwrap();
+    let input: String = read_input().unwrap();
     println!("{:?}", split(&input, ' '));
-
 }
 
 #[cfg(test)]
@@ -75,7 +82,10 @@ mod tests {
             "this will get replaced"
         );
 
-        assert_eq!(replace("this will not", "/", " "), "this will not");
+        assert_eq!(
+            replace("this will not replace", "/", " "),
+            "this will not replace"
+        );
     }
 
     #[test]
@@ -83,6 +93,11 @@ mod tests {
         assert_eq!(
             split("this/will/get/split", '/'),
             vec!["this", "will", "get", "split"]
+        );
+
+        assert_eq!(
+            split("com.jake.java.something", '.'),
+            vec!["com", "jake", "java", "something"]
         );
     }
 }
