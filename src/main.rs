@@ -27,15 +27,15 @@ fn split(literal: &str, separator: char) -> Vec<String> {
     let mut index: usize = 0;
 
     let mut current_part = String::new();
-    while index <= parts.len() {
+    while index < chars.len() {
         let current_char = chars[index];
         if current_char == separator {
-            current_part.push(current_char);
-            index += 1;
-        } else {
+            parts.push(current_part);
             current_part = String::new();
-            parts.push(current_part.to_owned());
+        } else {
+            current_part.push(current_char);
         }
+        index += 1;
     }
     return parts;
 }
@@ -54,15 +54,14 @@ fn read_input() -> Result<String, String> {
             return Err(e.to_string());
         }
     }
-
 }
 
-fn main() -> io::Result<()> {
+fn main() {
     let args = Opt::from_args();
 
-    println!("{:?}", read_input().unwrap());
+    let input = read_input().unwrap();
+    println!("{:?}", split(&input, ' '));
 
-    Ok(())
 }
 
 #[cfg(test)]
@@ -83,7 +82,7 @@ mod tests {
     fn split_test() {
         assert_eq!(
             split("this/will/get/split", '/'),
-            vec!["this", "will", "get", "replaced"]
+            vec!["this", "will", "get", "split"]
         );
     }
 }
