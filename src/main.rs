@@ -8,7 +8,7 @@ struct Opt {
     #[structopt(short, long)]
     split: bool,
 
-    /// -r, --replace,  rock --replace ~ /home/jake
+    /// -r, --replace,  rock --replace "~" "/home/jake"
     #[structopt(short, long)]
     replace: bool,
 
