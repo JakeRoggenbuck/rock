@@ -16,10 +16,6 @@ struct Opt {
     second: Option<String>,
 }
 
-fn replace(literal: &str, from: &str, to: &str) -> String {
-    return literal.replace(from, to).to_string();
-}
-
 fn split(literal: &str, separator: char) -> Vec<String> {
     let chars: Vec<char> = literal.chars().collect();
 
@@ -81,7 +77,7 @@ fn main() {
         }
     } else if args.replace {
         if args.first != None && args.second != None {
-            output = replace(&input, &args.first.unwrap(), &args.second.unwrap())
+            output = input.replace(&args.first.unwrap(), &args.second.unwrap())
         }
     }
     println!("{}", output);
@@ -90,19 +86,6 @@ fn main() {
 #[cfg(test)]
 mod tests {
     use super::*;
-
-    #[test]
-    fn replace_test() {
-        assert_eq!(
-            replace("this/will/get/replaced", "/", " "),
-            "this will get replaced"
-        );
-
-        assert_eq!(
-            replace("this will not replace", "/", " "),
-            "this will not replace"
-        );
-    }
 
     #[test]
     fn split_test() {
