@@ -108,12 +108,12 @@ mod tests {
     fn split_test() {
         assert_eq!(
             split("this/will/get/split", '/'),
-            vec!["this", "will", "get", "split"]
+            vec!["this\n", "will\n", "get\n", "split\n"]
         );
 
         assert_eq!(
             split("com.jake.java.something", '.'),
-            vec!["com", "jake", "java", "something"]
+            vec!["com\n", "jake\n", "java\n", "something\n"]
         );
     }
 }
