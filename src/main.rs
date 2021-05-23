@@ -32,6 +32,7 @@ fn split(literal: &str, separator: char) -> Vec<String> {
         // If it runs into the thing being split by,
         // push to parts and create a new part
         if current_char == separator {
+            current_part.push('\n');
             parts.push(current_part);
             current_part = String::new();
         } else {
@@ -68,7 +69,22 @@ fn main() {
     let args: Opt = Opt::from_args();
 
     let input: String = read_input().unwrap();
-    println!("{:?}", split(&input, ' '));
+    let mut output: String = String::new();
+
+    if args.split {
+        if args.first != None {
+            let first_char: char = args.first.unwrap().chars().nth(0).unwrap();
+            output = split(&input, first_char)
+                .iter()
+                .map(|x| x.to_owned())
+                .collect();
+        }
+    } else if args.replace {
+        if args.first != None && args.second != None {
+            output = replace(&input, &args.first.unwrap(), &args.second.unwrap())
+        }
+    }
+    println!("{}", output);
 }
 
 #[cfg(test)]
