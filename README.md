@@ -1,4 +1,5 @@
 # rock
+A simple command line utility for manipulating standard in and out, similar to awk
 
 # Usage
 | short | long        | description                                 | example                           |
