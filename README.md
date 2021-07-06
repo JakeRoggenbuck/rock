@@ -5,7 +5,8 @@ A simple command line utility for manipulating standard in and out, similar to a
 
 ## Install
 ```
-cargo install --path .
+git clone https://github.com/JakeRoggenbuck/rock
+cargo install --path rock
 ```
 
 ## Usage
