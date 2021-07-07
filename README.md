@@ -1,4 +1,4 @@
-# Rock
+# Rock ![Rust](https://img.shields.io/github/workflow/status/jakeroggenbuck/rock/Rust?style=for-the-badge)
 A simple command line utility for manipulating standard in and out, similar to awk
 
 -----
